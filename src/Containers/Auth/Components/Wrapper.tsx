@@ -6,7 +6,7 @@ export const Wrapper: React.FC<{ children: any }> = ({children}) => {
         <h2 className='text-xl font-medium text-center'>or start
             <span className='text-purple-700'>{" "}14 days free trail</span>
         </h2>
-        <div className="shadow-2xl px-6 py-8 rounded-md">
+        <div className="shadow-2xl px-6 py-8 rounded-md mt-10">
             {children}
         </div>
 
