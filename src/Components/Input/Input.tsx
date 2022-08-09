@@ -5,17 +5,19 @@ interface InputProps {
     placeholder?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     value?: string | number;
-    type?: 'text' | 'password'
+    type?: 'text' | 'password';
+    name?: string;
 }
 
-export const Input: React.FC<InputProps> = ({label, placeholder, onChange, value, type}) => {
-    return <div className='bg-amber-50' style={{background: 'white'}}>
+export const Input: React.FC<InputProps> = ({label, placeholder, onChange, value, type, name}) => {
+    return <div>
         {label && <label className='block'>{label}</label>}
         <input
             placeholder={placeholder}
             onChange={onChange}
             value={value}
             type={type}
+            name={name}
             className='block
               w-full
               border-slate-300

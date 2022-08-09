@@ -1,13 +1,13 @@
-import React, {ChangeEvent, ReactNode} from "react";
+import React, {MouseEventHandler, ReactNode} from "react";
 
 interface ButtonProps {
     children?: ReactNode | string
-    onClick?: (e: ChangeEvent<HTMLButtonElement>) => void;
+    onClick?: (e: any) => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({children, onClick}) => {
     return <button
-        onChange={onClick}
+        onClick={onClick}
         className='
       w-full
       text-center
