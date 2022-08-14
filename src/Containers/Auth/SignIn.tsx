@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Wrapper} from "./Components/Wrapper";
 import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
-import {Formik} from 'formik';
+import {Formik, FormikValues} from 'formik';
 
 export const SignIn: React.FC = () => {
+
+    const handleSignIn = useCallback((values: FormikValues) => {
+        fetch("http://localhost:8080/signup", {
+            method: "GET"
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }, []);
+
     return <Wrapper>
-        <Formik initialValues={{username: '', password: ''}} onSubmit={v => console.log(v)}>
+        <Formik initialValues={{username: '', password: ''}} onSubmit={handleSignIn}>
             {({
                   values,
                   handleChange,
