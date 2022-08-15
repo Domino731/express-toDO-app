@@ -1,7 +1,7 @@
 import {Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {userIsLoggedSelector} from "../Reducers/user/selectors";
-import React, {ReactNode} from "react";
+import React from "react";
 
 
 export const PrivateRoute: React.FC<any> = ({children}) => {
