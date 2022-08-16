@@ -3,9 +3,10 @@ import {Wrapper} from "./Components/Wrapper";
 import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
 import {Formik, FormikValues} from 'formik';
-import {apiRequest} from "../../api/methods";
 import {useDispatch} from "react-redux";
 import {signUpUser} from "../../Reducers/user/thunks";
+import {SignUpSchema} from "./Schemes";
+
 
 export const SignIn: React.FC = () => {
     // custom hooks
@@ -13,31 +14,52 @@ export const SignIn: React.FC = () => {
 
     /** sign up the user */
     const handleSignIn = useCallback((values: FormikValues) => {
-        const {username, password} = values;
+        const {email, password} = values;
         // @ts-ignore
-        dispatch(signUpUser({email: username, password}));
+        dispatch(signUpUser({email, password}));
     }, [dispatch]);
 
     return <Wrapper>
-        <Formik initialValues={{username: '', password: ''}} onSubmit={handleSignIn}>
+        <Formik
+            initialValues={{email: '', password: ''}}
+            onSubmit={handleSignIn}
+            validationSchema={SignUpSchema}
+        >
             {({
                   values,
                   handleChange,
                   handleSubmit,
+                  errors,
+                  touched
               }) => <form>
-                <Input label='Username' name='username' placeholder={'user@example.com'} value={values.username}
-                       onChange={handleChange}/>
+                <Input
+                    label='email'
+                    name='email'
+                    placeholder={'user@example.com'}
+                    value={values.email}
+                    onChange={handleChange}
+                    error={Boolean(errors.email && touched.email)}
+                    errorMessage={errors.email}
+                />
                 <span className='block pb-4'/>
-                <Input label='Password' name='password' placeholder="***********" type='password'
-                       value={values.password}
-                       onChange={handleChange}/>
+                <Input
+                    label='Password'
+                    name='password'
+                    placeholder="***********"
+                    type='password'
+                    value={values.password}
+                    onChange={handleChange}
+                    error={Boolean(errors.password && touched.password)}
+                    errorMessage={errors.password}
+                />
                 <span className='block pb-10'/>
                 <Button
-                    disabled
                     onClick={(e) => {
                         e.preventDefault();
                         handleSubmit();
-                    }}>Sign in</Button>
+                    }}>
+                    Sign in
+                </Button>
             </form>}
         </Formik>
     </Wrapper>
