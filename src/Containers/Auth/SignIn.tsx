@@ -3,20 +3,22 @@ import {Wrapper} from "./Components/Wrapper";
 import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
 import {Formik, FormikValues} from 'formik';
+import {apiRequest} from "../../api/methods";
 
 export const SignIn: React.FC = () => {
 
     const handleSignIn = useCallback((values: FormikValues) => {
         const {username, password} = values;
-        fetch("http://localhost:8080/signup", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email: username, password})
-        })
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
+        apiRequest('POST', '/signup', {email: username, password}).then(res => console.log(res))
+        // fetch("http://localhost:8080/signup", {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({email: username, password})
+        // })
+        //     .then(res => console.log(res))
+        //     .catch(err => console.log(err))
     }, []);
 
     return <Wrapper>
