@@ -3,12 +3,19 @@ import React, {MouseEventHandler, ReactNode} from "react";
 interface ButtonProps {
     children?: ReactNode | string
     onClick?: (e: any) => void;
+    disabled?: boolean;
 }
 
-export const Button: React.FC<ButtonProps> = ({children, onClick}) => {
+export const Button: React.FC<ButtonProps> = ({children, onClick, disabled}) => {
     return <button
-        onClick={onClick}
+        disabled={disabled}
+        onClick={(e) => {
+            if (!disabled && onClick) {
+                onClick(e);
+            }
+        }}
         className='
+        disabled:opacity-75
       w-full
       text-center
       bg-purple-600

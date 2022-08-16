@@ -4,22 +4,19 @@ import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
 import {Formik, FormikValues} from 'formik';
 import {apiRequest} from "../../api/methods";
+import {useDispatch} from "react-redux";
+import {signUpUser} from "../../Reducers/user/thunks";
 
 export const SignIn: React.FC = () => {
+    // custom hooks
+    const dispatch = useDispatch();
 
+    /** sign up the user */
     const handleSignIn = useCallback((values: FormikValues) => {
         const {username, password} = values;
-        apiRequest('POST', '/signup', {email: username, password}).then(res => console.log(res))
-        // fetch("http://localhost:8080/signup", {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({email: username, password})
-        // })
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
-    }, []);
+        // @ts-ignore
+        dispatch(signUpUser({email: username, password}));
+    }, [dispatch]);
 
     return <Wrapper>
         <Formik initialValues={{username: '', password: ''}} onSubmit={handleSignIn}>
@@ -35,10 +32,12 @@ export const SignIn: React.FC = () => {
                        value={values.password}
                        onChange={handleChange}/>
                 <span className='block pb-10'/>
-                <Button onClick={(e) => {
-                    e.preventDefault();
-                    handleSubmit();
-                }}>Sign in</Button>
+                <Button
+                    disabled
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                    }}>Sign in</Button>
             </form>}
         </Formik>
     </Wrapper>
