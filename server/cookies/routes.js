@@ -3,3 +3,10 @@ const {Router} = require("express");
 
 // server router
 const router = Router();
+
+router.get("/set-cookies", (req, res) => {
+    res.setHeader('Set-Cookie', 'newUser: true');
+    res.send("You got the cookies :)")
+});
+
+module.exports = router;
