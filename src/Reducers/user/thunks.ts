@@ -2,9 +2,17 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {apiRequest} from "../../api/methods";
 
 export const signUpUser = createAsyncThunk(
-    'users/fetchByIdStatus',
+    'user/signUp',
     async (data: { password: string, email: string }, thunkAPI) => {
         const response = await apiRequest('POST', '/signup', data)
+        return response.data
+    }
+)
+
+export const signInUser = createAsyncThunk(
+    'user/signIn',
+    async (data: { password: string, email: string }, thunkAPI) => {
+        const response = await apiRequest('POST', '/signin', data)
         return response.data
     }
 )

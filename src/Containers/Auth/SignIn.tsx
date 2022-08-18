@@ -4,8 +4,8 @@ import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
 import {Formik, FormikValues} from 'formik';
 import {useDispatch} from "react-redux";
-import {signUpUser} from "../../Reducers/user/thunks";
-import {SignUpSchema} from "./Schemes";
+import {signInUser} from "../../Reducers/user/thunks";
+import {SignInSchema} from "./Schemes";
 
 
 export const SignIn: React.FC = () => {
@@ -16,14 +16,14 @@ export const SignIn: React.FC = () => {
     const handleSignIn = useCallback((values: FormikValues) => {
         const {email, password} = values;
         // @ts-ignore
-        dispatch(signUpUser({email, password}));
+        dispatch(signInUser({email, password}));
     }, [dispatch]);
 
     return <Wrapper>
         <Formik
             initialValues={{email: '', password: ''}}
             onSubmit={handleSignIn}
-            validationSchema={SignUpSchema}
+            validationSchema={SignInSchema}
         >
             {({
                   values,

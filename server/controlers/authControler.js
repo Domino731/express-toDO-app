@@ -35,8 +35,7 @@ module.exports.signup_post = async (req, res) => {
     }
 }
 module.exports.login_get = (req, res) => {
-    res.send("success");
-    res.json({message: "success"});
+    const {email, password} = req.body;
 }
 module.exports.login_post = async (req, res) => {
     res.send("success");

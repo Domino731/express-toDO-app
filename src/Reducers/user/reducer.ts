@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {signUpUser} from "./thunks";
+import {signInUser, signUpUser} from "./thunks";
 
 export interface UserState {
     isLogged: boolean;
@@ -29,8 +29,8 @@ export const user = createSlice({
     },
     // Add reducers for additional action types
     extraReducers: (builder) => {
-        // signUp logic
         builder
+            // sign up logic
             .addCase(signUpUser.fulfilled, (state, action) => {
                 state.signUpLoader = false;
             })
@@ -39,6 +39,16 @@ export const user = createSlice({
             })
             .addCase(signUpUser.rejected, (state, action) => {
                 state.signUpLoader = false;
+            })
+            // sign in logic
+            .addCase(signInUser.fulfilled, (state, action) => {
+                state.signInLoader = false;
+            })
+            .addCase(signUpUser.pending, (state, action) => {
+                state.signInLoader = true;
+            })
+            .addCase(signUpUser.rejected, (state, action) => {
+                state.signInLoader = false;
             })
     },
 });
