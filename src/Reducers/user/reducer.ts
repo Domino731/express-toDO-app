@@ -44,10 +44,10 @@ export const user = createSlice({
             .addCase(signInUser.fulfilled, (state, action) => {
                 state.signInLoader = false;
             })
-            .addCase(signUpUser.pending, (state, action) => {
+            .addCase(signInUser.pending, (state, action) => {
                 state.signInLoader = true;
             })
-            .addCase(signUpUser.rejected, (state, action) => {
+            .addCase(signInUser.rejected, (state, action) => {
                 state.signInLoader = false;
             })
     },

@@ -29,10 +29,25 @@ userSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt();
 
     // "this" refers to user data - password & email
-    this.passwod = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
 })
 
+// STATIC METHODS for user
+// log the user
+userSchema.statics.login = async function (email, password) {
+    const user = await this.findOne({email});
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            return user;
+        } else {
+            throw Error("Incorrect password");
+        }
+    } else {
+        throw Error("Incorrect email");
+    }
+}
 
 const User = mongoose.model("user", userSchema);
 module.exports = User;

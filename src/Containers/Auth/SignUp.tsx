@@ -57,7 +57,7 @@ export const SignUp: React.FC = () => {
                         e.preventDefault();
                         handleSubmit();
                     }}>
-                    Sign in
+                    Sign up
                 </Button>
             </form>}
         </Formik>
