@@ -2,7 +2,17 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const handleError = (error) => {
-    console.log(error);
+    let message = {text: '', code: 0}
+    if (error.message === 'Incorrect email') {
+        message.text = 'Pass valid e-mail';
+        message.code = 'AL1'
+    }
+    if (error.message == 'Incorrect password') {
+        message.text = 'Pass correct password';
+        message.code = 'AL2'
+    }
+
+    return message;
 }
 
 const createToken = (id) => {
@@ -27,7 +37,7 @@ module.exports.signup_post = async (req, res) => {
         res.cookie('jwt', token, {
             httpOnly: true,      // 3 days in milliseconds
             expiresIn: 3 * 60 * 60 * 24 * 1000
-        })
+        });
         res.status(201).json(user);
     } catch (err) {
         handleError(err);
@@ -49,8 +59,15 @@ module.exports.login_post = async (req, res) => {
 
     try {
         const user = await User.login(email, password);
+        // set jwt token to cookie
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,      // 3 days in milliseconds
+            expiresIn: 3 * 60 * 60 * 24 * 1000
+        });
         res.status(200).json({id: user._id})
     } catch (err) {
-        res.status(400).json({});
+        const error = handleError(err);
+        res.status(400).json(error);
     }
 }
