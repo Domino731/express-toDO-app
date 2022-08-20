@@ -8,6 +8,7 @@ const handleError = (error) => {
         message.code = 'AL1'
     }
     if (error.message == 'Incorrect password') {
+
         message.text = 'Pass correct password';
         message.code = 'AL2'
     }
