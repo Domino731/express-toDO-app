@@ -32,6 +32,7 @@ export const user = createSlice({
         builder
             // sign up logic
             .addCase(signUpUser.fulfilled, (state, action) => {
+                console.log(action);
                 state.signUpLoader = false;
             })
             .addCase(signUpUser.pending, (state, action) => {
@@ -42,6 +43,7 @@ export const user = createSlice({
             })
             // sign in logic
             .addCase(signInUser.fulfilled, (state, action) => {
+                console.log(action);
                 state.signInLoader = false;
             })
             .addCase(signInUser.pending, (state, action) => {

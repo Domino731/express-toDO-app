@@ -5,13 +5,13 @@ const bcrypt = require("bcrypt");
 // mongo schema for user
 const userSchema = mongoose.Schema({
     email: {
-        type: [String, "Invalid email type, expected String"],
+        type: String,
         required: [true, "Missing email"],
         unique: [true, "E-mail must be unique"],
         validate: [isEmail, "Please, enter an valid e-mail"]
     },
     password: {
-        type: [String, "Invalid password type, expected String"],
+        type: String,
         required: [true, "Missing password"],
         minLength: [6, "Password is too short"],
     }

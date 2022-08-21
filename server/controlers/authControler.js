@@ -30,7 +30,7 @@ module.exports.signup_get = (req, res) => {
 }
 module.exports.signup_post = async (req, res) => {
     const {email, password} = req.body;
-
+    console.log(12);
     try {
         const user = await User.create({email, password});
         // set jwt token to cookie
@@ -41,6 +41,7 @@ module.exports.signup_post = async (req, res) => {
         });
         res.status(201).json(user);
     } catch (err) {
+        console.log(err);
         handleError(err);
         res.status(400).json();
     }

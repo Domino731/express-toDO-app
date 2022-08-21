@@ -11,8 +11,8 @@ export const signUpUser = createAsyncThunk(
 
 export const signInUser = createAsyncThunk(
     'user/signIn',
-    async (data: { password: string, email: string }, thunkAPI) => {
-        const response = await apiRequest('POST', '/login', data);
+    async (payload: { password: string, email: string }, thunkAPI) => {
+        const response = await apiRequest('POST', '/login', payload);
         return response.data
 
     }
