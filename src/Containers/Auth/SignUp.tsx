@@ -6,17 +6,20 @@ import {Button} from "../../Components/Button";
 import {useDispatch} from "react-redux";
 import {signUpUser} from "../../Reducers/user/thunks";
 import {SignUpSchema} from "./Schemes";
+import {useNavigate} from "react-router-dom";
 
 export const SignUp: React.FC = () => {
     // custom hooks
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     /** sign up the user */
     const handleSignIn = useCallback((values: FormikValues) => {
         const {email, password} = values;
+        const onSuccess = () => navigate('/');
         // @ts-ignore
-        dispatch(signUpUser({email, password}));
-    }, [dispatch]);
+        dispatch(signUpUser({email, password, onSuccess}));
+    }, [dispatch, navigate]);
 
     return <Wrapper>
         <Formik

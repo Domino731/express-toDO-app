@@ -39,9 +39,8 @@ module.exports.signup_post = async (req, res) => {
             httpOnly: true,      // 3 days in milliseconds
             expiresIn: 3 * 60 * 60 * 24 * 1000
         });
-        res.status(201).json(user);
+        res.status(201).json({data: user, status: 201});
     } catch (err) {
-        console.log(err);
         handleError(err);
         res.status(400).json();
     }
@@ -67,7 +66,7 @@ module.exports.login_post = async (req, res) => {
             httpOnly: true,      // 3 days in milliseconds
             expiresIn: 3 * 60 * 60 * 24 * 1000
         });
-        res.status(200).json({id: user._id})
+        res.status(200).json({data: {id: user._id}, status: 200});
     } catch (err) {
         const error = handleError(err);
         res.status(400).json(error);
