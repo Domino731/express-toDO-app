@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const userModel = require("../models/user");
 
 const handleError = (error) => {
     let message = {text: '', code: 0}
@@ -70,5 +71,24 @@ module.exports.login_post = async (req, res) => {
     } catch (err) {
         const error = handleError(err);
         res.status(400).json(error);
+    }
+}
+
+
+module.exports.checkCurrentUser = (req, res) => {
+    const token = req.cookies.jwt;
+
+    if (token) {
+        jwt.verify(token, 'jwt', async (err, decodedToken) => {
+            if (err) {
+                res.status(400);
+            } else {
+                let user = await userModel.findById(decodedToken.id);
+                res.status(200);
+                res.send("Success").json({user});
+            }
+        })
+    } else {
+        res.status(400);
     }
 }
