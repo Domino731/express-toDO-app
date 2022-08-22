@@ -8,7 +8,7 @@ import {apiRequest} from "./api/methods";
 function App() {
 
     useEffect(() => {
-        apiRequest("GET", "/set-cookies").then(res => console.log(res))
+        apiRequest("POST", "/checkCurrentUser").then(res => console.log(res))
     }, []);
 
     return (

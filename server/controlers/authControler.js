@@ -77,18 +77,17 @@ module.exports.login_post = async (req, res) => {
 
 module.exports.checkCurrentUser = (req, res) => {
     const token = req.cookies.jwt;
-
     if (token) {
         jwt.verify(token, 'jwt', async (err, decodedToken) => {
             if (err) {
-                res.status(400);
+                console.log(err);
+                res.status(400).json({message: ""})
             } else {
                 let user = await userModel.findById(decodedToken.id);
-                res.status(200);
-                res.send("Success").json({user});
+                res.status(200).json({user});
             }
         })
     } else {
-        res.status(400);
+        res.status(400).json({message: "No user found"});
     }
 }

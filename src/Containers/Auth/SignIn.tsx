@@ -6,9 +6,9 @@ import {Formik, FormikValues} from 'formik';
 import {useDispatch} from "react-redux";
 import {signInUser} from "../../Reducers/user/thunks";
 import {SignInSchema} from "./Schemes";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-
+/** Auth form - signIn, log to account */
 export const SignIn: React.FC = () => {
     // hooks
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export const SignIn: React.FC = () => {
         dispatch(signInUser({email, password, onSuccess}));
     }, [dispatch, navigate]);
 
-    return <Wrapper>
+    return <Wrapper title='Sign in'>
         <Formik
             initialValues={{email: '', password: ''}}
             onSubmit={handleSignIn}
@@ -65,5 +65,9 @@ export const SignIn: React.FC = () => {
                 </Button>
             </form>}
         </Formik>
+
+        <div className='mt-8 flex justify-center text-purple-600 hover:text-purple-700'>
+            <Link to={'/sign-up'}>Create an account</Link>
+        </div>
     </Wrapper>
 }

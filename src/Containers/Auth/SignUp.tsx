@@ -6,7 +6,7 @@ import {Button} from "../../Components/Button";
 import {useDispatch} from "react-redux";
 import {signUpUser} from "../../Reducers/user/thunks";
 import {SignUpSchema} from "./Schemes";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const SignUp: React.FC = () => {
     // custom hooks
@@ -21,7 +21,7 @@ export const SignUp: React.FC = () => {
         dispatch(signUpUser({email, password, onSuccess}));
     }, [dispatch, navigate]);
 
-    return <Wrapper>
+    return <Wrapper title='Sign up'>
         <Formik
             initialValues={{email: '', password: ''}}
             onSubmit={handleSignIn}
@@ -64,5 +64,9 @@ export const SignUp: React.FC = () => {
                 </Button>
             </form>}
         </Formik>
+
+        <div className='mt-8 flex justify-center text-purple-600 hover:text-purple-700'>
+            <Link to={'/sign-in'}>Already have an account? sign in here</Link>
+        </div>
     </Wrapper>
 }
