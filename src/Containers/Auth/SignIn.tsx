@@ -1,12 +1,13 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {Wrapper} from "./Components/Wrapper";
 import {Input} from "../../Components/Input";
 import {Button} from "../../Components/Button";
 import {Formik, FormikValues} from 'formik';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {signInUser} from "../../Reducers/user/thunks";
 import {SignInSchema} from "./Schemes";
 import {Link, useNavigate} from "react-router-dom";
+import {userIsLoggedSelector} from "../../Reducers/user/selectors";
 
 /** Auth form - signIn, log to account */
 export const SignIn: React.FC = () => {
@@ -17,14 +18,14 @@ export const SignIn: React.FC = () => {
     /** sign up the user */
     const handleSignIn = useCallback((values: FormikValues) => {
         const {email, password} = values;
-        const onSuccess = navigate('/');
+        const onSuccess = () => navigate('/');
         // @ts-ignore
         dispatch(signInUser({email, password, onSuccess}));
     }, [dispatch, navigate]);
 
     return <Wrapper title='Sign in'>
         <Formik
-            initialValues={{email: '', password: ''}}
+            initialValues={{email: 'test123@gmail.com', password: '1234567890'}}
             onSubmit={handleSignIn}
             validationSchema={SignInSchema}
         >
