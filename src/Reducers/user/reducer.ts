@@ -19,7 +19,7 @@ export const USER_REDUCER_NAME = 'user';
 
 /** REDUX user reducer */
 export const user = createSlice({
-    name: 'counter',
+    name: USER_REDUCER_NAME,
     initialState,
     // standard reducer logic, with auto-generated action types per reducer
     reducers: {

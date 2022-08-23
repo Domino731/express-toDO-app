@@ -1,8 +1,9 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {apiRequest} from "../../api/methods";
+import {USER_CONSTANTS} from "./const";
 
 export const signUpUser = createAsyncThunk(
-    'user/signUp',
+    USER_CONSTANTS.SIGN_UP,
     async (payload: { password: string, email: string, onSuccess: () => void }, thunkAPI) => {
         const {password, email, onSuccess} = payload;
         const response = await apiRequest('POST', '/signup', {password, email});
@@ -14,7 +15,7 @@ export const signUpUser = createAsyncThunk(
 )
 
 export const signInUser = createAsyncThunk(
-    'user/signIn',
+    USER_CONSTANTS.SIGN_IN,
     async (payload: { password: string, email: string, onSuccess: () => void }, thunkAPI) => {
         const {password, email, onSuccess} = payload;
         const response = await apiRequest('POST', '/login', {password, email});

@@ -4,6 +4,7 @@ import {SignIn, SignUp} from "./Containers/Auth";
 import {Routes, Route} from "react-router-dom";
 import {PrivateRoute} from "./Router/PrivateRoute";
 import {apiRequest} from "./api/methods";
+import Home from "./Containers/Home";
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
         <div className="flex justify-center items-center h-full w-full">
             <Routes>
                 <Route path="/" element={<PrivateRoute>
-                    <div>logged</div>
+                    <Home/>
                 </PrivateRoute>}/>
                 <Route path="/sign-in" element={<SignIn/>}/>
                 <Route path="/sign-up" element={<SignUp/>}/>
