@@ -1,5 +1,5 @@
 import {TaskDataInterface} from "../../../Reducers/tasks/types";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {tasksButtonLoaderSelector, tasksDataSelector} from "../../../Reducers/tasks/selectors";
 import React, {ChangeEvent, useCallback, useState} from "react";
 import {Input} from "../../../Components/Input";
@@ -7,6 +7,7 @@ import {TASK_CONFIG} from "../../../const";
 import {Button} from "../../../Components/Button";
 
 export const NewTaskHeader: React.FC = () => {
+    const dispatch = useDispatch();
     const tasksButtonLoader: boolean = useSelector(tasksButtonLoaderSelector);
 
     // states
