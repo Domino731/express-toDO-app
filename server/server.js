@@ -2,6 +2,7 @@ require('dotenv').config({path: __dirname + '/.env'})
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth/auth");
+const taskRoute = require("./routes/tasks");
 const cookiesRoute = require("./cookies/routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -34,6 +35,8 @@ mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
 
 // routes initialisation
 app.use(authRoute);
+app.use(taskRoute);
+
 // app.use(cookiesRoute);
 
 // listening on port
