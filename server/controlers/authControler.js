@@ -4,6 +4,7 @@ const userModel = require("../models/user");
 
 const handleError = (error) => {
     let message = {text: '', code: 0}
+    console.log(error);
     if (error.message === 'Incorrect email') {
         message.text = 'Pass valid e-mail';
         message.code = 'AL1'
@@ -31,9 +32,9 @@ module.exports.signup_get = (req, res) => {
 }
 module.exports.signup_post = async (req, res) => {
     const {email, password} = req.body;
-    console.log(12);
+
     try {
-        const user = await User.create({email, password});
+        const user = await User.create({email, password, tasks: []});
         // set jwt token to cookie
         const token = createToken(user._id);
         res.cookie('jwt', token, {
@@ -42,6 +43,7 @@ module.exports.signup_post = async (req, res) => {
         });
         res.status(201).json({data: user, status: 201});
     } catch (err) {
+        // console.log(err);
         handleError(err);
         res.status(400).json();
     }

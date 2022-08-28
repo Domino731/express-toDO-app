@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const {isEmail} = require("validator");
 const bcrypt = require("bcrypt");
+const taskScheme = require("./tasks");
 
 // mongo schema for user
 const userSchema = mongoose.Schema({
@@ -14,7 +15,8 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Missing password"],
         minLength: [6, "Password is too short"],
-    }
+    },
+    tasks: [taskScheme]
 });
 
 // fire a function after doc saved to mongoDB
@@ -30,6 +32,10 @@ userSchema.pre("save", async function (next) {
 
     // "this" refers to user data - password & email
     this.password = await bcrypt.hash(this.password, salt);
+
+    // add tasks array
+    this.tasks = [];
+
     next();
 })
 
