@@ -93,3 +93,13 @@ module.exports.checkCurrentUser = (req, res) => {
         res.status(400).json({message: "No user found"});
     }
 }
+
+module.exports.addTask = async (req, res) => {
+    const exampleTask = {
+        id: 'testst',
+        title: '123asdaljksdnmakljsd'
+    }
+    const user = await userModel.findByIdAndUpdate("62fb8715869498e8380c3142", {$push: {'tasks': exampleTask}});
+    res.status(200)
+        .json({message: "SUCCESS", user});
+}

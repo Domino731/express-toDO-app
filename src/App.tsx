@@ -9,7 +9,7 @@ import Home from "./Containers/Home";
 function App() {
 
     useEffect(() => {
-        apiRequest("POST", "/checkCurrentUser").then(res => console.log(res))
+        apiRequest("GET", "/add-task").then(res => console.log(res))
     }, []);
 
     return (
