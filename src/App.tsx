@@ -8,9 +8,9 @@ import Home from "./Containers/Home";
 
 function App() {
 
-    useEffect(() => {
-        apiRequest("GET", "/add-task").then(res => console.log(res))
-    }, []);
+    // useEffect(() => {
+    //     apiRequest("GET", "/add-task").then(res => console.log(res))
+    // }, []);
 
     return (
         <div className="flex justify-center items-center h-full w-full">

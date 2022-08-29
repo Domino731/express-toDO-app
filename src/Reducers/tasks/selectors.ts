@@ -6,6 +6,3 @@ const tasksState = (state: ReduxState) => state[TASKS_REDUCER_NAME];
 
 /** REDUX - tasks selector, get data about tasks*/
 export const tasksDataSelector = createSelector(tasksState, (state) => state.data);
-
-/** REDUX - tasks selector, get button loader flag*/
-export const tasksButtonLoaderSelector = createSelector(tasksState, (state) => state.buttonLoader);

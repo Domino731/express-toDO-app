@@ -1,18 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {signInUser, signUpUser} from "./thunks";
+import {addNewTask, signInUser, signUpUser} from "./thunks";
 
 export interface UserState {
-    isLogged: boolean;
+    user: string | null;
     signUpLoader: boolean;
     signInLoader: boolean;
+    addNewTaskLoader: boolean;
     passwordRecoveryLoader: boolean;
 }
 
 const initialState: UserState = {
-    isLogged: false,
+    user: null,
     signUpLoader: false,
     signInLoader: false,
-    passwordRecoveryLoader: false
+    passwordRecoveryLoader: false,
+    addNewTaskLoader: false
 }
 
 export const USER_REDUCER_NAME = 'user';
@@ -24,7 +26,7 @@ export const user = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
     reducers: {
         changeIsLogged: (state, action) => {
-            state.isLogged = action.payload;
+            // state.isLogged = action.payload;
         }
     },
     // Add reducers for additional action types
@@ -32,7 +34,7 @@ export const user = createSlice({
         builder
             // sign up logic
             .addCase(signUpUser.fulfilled, (state, action) => {
-                state.isLogged = true;
+                state.user = '';
                 state.signUpLoader = false;
             })
             .addCase(signUpUser.pending, (state, action) => {
@@ -43,7 +45,7 @@ export const user = createSlice({
             })
             // sign in logic
             .addCase(signInUser.fulfilled, (state, action) => {
-                state.isLogged = true;
+                state.user = action.payload.data.id;
                 state.signInLoader = false;
             })
             .addCase(signInUser.pending, (state, action) => {
@@ -51,6 +53,17 @@ export const user = createSlice({
             })
             .addCase(signInUser.rejected, (state, action) => {
                 state.signInLoader = false;
+            })
+            // adding new task logic
+            .addCase(addNewTask.fulfilled, (state, action) => {
+                console.log(action);
+                state.addNewTaskLoader = false;
+            })
+            .addCase(addNewTask.pending, (state, action) => {
+                state.addNewTaskLoader = true;
+            })
+            .addCase(addNewTask.rejected, (state, action) => {
+                state.addNewTaskLoader = false;
             })
     },
 });

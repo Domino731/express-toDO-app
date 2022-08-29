@@ -103,3 +103,15 @@ module.exports.addTask = async (req, res) => {
     res.status(200)
         .json({message: "SUCCESS", user});
 }
+
+module.exports.getTasks = async (req, res) => {
+    const {userId} = req.body;
+    if (userId) {
+        let status;
+        let message;
+        let data;
+        res.status(200).json({message: "SUCCESS", status: 200});
+    } else {
+        res.status(404).json({message: "FAILED", status: 404});
+    }
+}

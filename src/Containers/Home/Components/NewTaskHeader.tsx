@@ -1,14 +1,17 @@
-import {TaskDataInterface} from "../../../Reducers/tasks/types";
 import {useDispatch, useSelector} from "react-redux";
-import {tasksButtonLoaderSelector, tasksDataSelector} from "../../../Reducers/tasks/selectors";
 import React, {ChangeEvent, useCallback, useState} from "react";
 import {Input} from "../../../Components/Input";
 import {TASK_CONFIG} from "../../../const";
 import {Button} from "../../../Components/Button";
+import {addNewTaskLoaderSelector, userIdSelector} from "../../../Reducers/user/selectors";
+import {addNewTask} from "../../../Reducers/user/thunks";
 
 export const NewTaskHeader: React.FC = () => {
     const dispatch = useDispatch();
-    const tasksButtonLoader: boolean = useSelector(tasksButtonLoaderSelector);
+
+    // selectors
+    const addNewTaskLoader = useSelector(addNewTaskLoaderSelector);
+    const userId: string | null = useSelector(userIdSelector);
 
     // states
     // holding value from input
@@ -18,12 +21,23 @@ export const NewTaskHeader: React.FC = () => {
     const handleChangeInputValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const {value} = e.target;
         setInputValue(value);
-    }, [])
+    }, []);
+
+    /** add new task */
+    const handleAddNewTask = useCallback(() => {
+        if (userId) {
+            const onSuccess = () => setInputValue('');
+
+            // @ts-ignore
+            dispatch(addNewTask({title: inputValue, userId, onSuccess}));
+        }
+    }, [inputValue, userId]);
 
     return <>
         <Input label="Add new task" onChange={handleChangeInputValue} value={inputValue}
                placeholder="Go with a dog"/>
         <span className="block mt-4"/>
-        {inputValue.length >= TASK_CONFIG.MIN_LENGTH && <Button disabled={tasksButtonLoader}>Add</Button>}
+        {inputValue.length >= TASK_CONFIG.MIN_LENGTH &&
+            <Button disabled={addNewTaskLoader} onClick={handleAddNewTask}>Add</Button>}
     </>
 }
