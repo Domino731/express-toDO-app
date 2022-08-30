@@ -10,7 +10,7 @@ router.post('/signup', authController.signup_post);
 router.get('/login', authController.login_get);
 router.post('/login', authController.login_post);
 router.post('/checkCurrentUser', authController.checkCurrentUser);
-router.get('/add-task', authController.addTask);
+router.post('/add-task', authController.addTask);
 router.get('/tasks', authController.getTasks)
 
 module.exports = router;

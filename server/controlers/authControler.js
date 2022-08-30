@@ -95,13 +95,20 @@ module.exports.checkCurrentUser = (req, res) => {
 }
 
 module.exports.addTask = async (req, res) => {
-    const exampleTask = {
-        id: 'testst',
-        title: '123asdaljksdnmakljsd'
+    const {title, userId} = req.body;
+    try {
+        const user = await userModel.findByIdAndUpdate(userId, {
+            $push: {
+                'tasks': {
+                    title,
+                }
+            }
+        });
+        const userTasks = await userModel.findById(userId);
+        res.status(200).json({message: "SUCCESS", data: userTasks.tasks});
+    } catch (e) {
+        res.status(400).json({message: "FAILED"});
     }
-    const user = await userModel.findByIdAndUpdate("62fb8715869498e8380c3142", {$push: {'tasks': exampleTask}});
-    res.status(200)
-        .json({message: "SUCCESS", user});
 }
 
 module.exports.getTasks = async (req, res) => {

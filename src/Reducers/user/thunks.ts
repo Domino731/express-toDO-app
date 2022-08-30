@@ -30,10 +30,10 @@ export const signInUser = createAsyncThunk(
 
 export const addNewTask = createAsyncThunk(
     USER_CONSTANTS.ADD_NEW_TASK,
-    async (payload: { title: string, userId: string, onSuccess: () => void }) => {
-        console.log(1233);
-        const {title, onSuccess} = payload;
-        const response = await apiRequest(API_METHODS.GET, '/tasks', {title});
+    async (payload: { title: string, userId: string, onSuccess: () => void }, thunkApi) => {
+        console.log(thunkApi);
+        const {title, userId, onSuccess} = payload;
+        const response = await apiRequest(API_METHODS.POST, '/add-task', {title, userId});
         if (response.status === 200) {
             onSuccess();
         }

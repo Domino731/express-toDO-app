@@ -31,7 +31,7 @@ export const NewTaskHeader: React.FC = () => {
             // @ts-ignore
             dispatch(addNewTask({title: inputValue, userId, onSuccess}));
         }
-    }, [inputValue, userId]);
+    }, [dispatch, inputValue, userId]);
 
     return <>
         <Input label="Add new task" onChange={handleChangeInputValue} value={inputValue}
