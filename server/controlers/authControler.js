@@ -112,12 +112,11 @@ module.exports.addTask = async (req, res) => {
 }
 
 module.exports.getTasks = async (req, res) => {
-    const {userId} = req.body;
+    const {userId} = req.query;
+  
     if (userId) {
-        let status;
-        let message;
-        let data;
-        res.status(200).json({message: "SUCCESS", status: 200});
+        const userTasks = await userModel.findById(userId);
+        res.status(200).json({message: "SUCCESS", data: userTasks.tasks});
     } else {
         res.status(404).json({message: "FAILED", status: 404});
     }

@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {addNewTask, signInUser, signUpUser} from "./thunks";
+import {addNewTask, getTasks, signInUser, signUpUser} from "./thunks";
 
 export interface UserState {
     user: string | null;
@@ -7,6 +7,7 @@ export interface UserState {
     signInLoader: boolean;
     addNewTaskLoader: boolean;
     passwordRecoveryLoader: boolean;
+    tasks: Array<{ title: string }>
 }
 
 const initialState: UserState = {
@@ -14,7 +15,8 @@ const initialState: UserState = {
     signUpLoader: false,
     signInLoader: false,
     passwordRecoveryLoader: false,
-    addNewTaskLoader: false
+    addNewTaskLoader: false,
+    tasks: []
 }
 
 export const USER_REDUCER_NAME = 'user';
@@ -43,6 +45,7 @@ export const user = createSlice({
             .addCase(signUpUser.rejected, (state, action) => {
                 state.signUpLoader = false;
             })
+
             // sign in logic
             .addCase(signInUser.fulfilled, (state, action) => {
                 state.user = action.payload.data.id;
@@ -54,6 +57,7 @@ export const user = createSlice({
             .addCase(signInUser.rejected, (state, action) => {
                 state.signInLoader = false;
             })
+
             // adding new task logic
             .addCase(addNewTask.fulfilled, (state, action) => {
                 console.log(action);
@@ -63,6 +67,19 @@ export const user = createSlice({
                 state.addNewTaskLoader = true;
             })
             .addCase(addNewTask.rejected, (state, action) => {
+                state.addNewTaskLoader = false;
+            })
+
+            // get all user tasks logic
+            .addCase(getTasks.fulfilled, (state, action) => {
+                console.log(action);
+                state.addNewTaskLoader = false;
+            })
+            .addCase(getTasks.pending, (state, action) => {
+                state.addNewTaskLoader = true;
+            })
+            .addCase(getTasks.rejected, (state, action) => {
+                state.tasks = [];
                 state.addNewTaskLoader = false;
             })
     },
