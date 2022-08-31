@@ -1,8 +1,9 @@
 /** Component for user tasks list */
 import {useDispatch, useSelector} from "react-redux";
-import {userIdSelector} from "../../../Reducers/user/selectors";
+import {userIdSelector, userTasksSelector} from "../../../Reducers/user/selectors";
 import {useEffect} from "react";
 import {getTasks} from "../../../Reducers/user/thunks";
+import {Task} from "./Task";
 
 export const TasksBoard = () => {
     // custom hooks
@@ -10,6 +11,7 @@ export const TasksBoard = () => {
 
     // selectors
     const userId = useSelector(userIdSelector);
+    const userTasks = useSelector(userTasksSelector);
 
     // fetch task data on component mount
     useEffect(() => {
@@ -19,5 +21,11 @@ export const TasksBoard = () => {
         }
     }, [dispatch, userId])
 
-    return <div>asd</div>
+    useEffect(() => {
+        console.log(userTasks);
+    }, [userTasks])
+
+    return <div>
+        {userTasks.map(task => <Task data={task} key={task.title}/>)}
+    </div>
 }

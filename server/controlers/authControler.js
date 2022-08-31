@@ -97,10 +97,11 @@ module.exports.checkCurrentUser = (req, res) => {
 module.exports.addTask = async (req, res) => {
     const {title, userId} = req.body;
     try {
-        const user = await userModel.findByIdAndUpdate(userId, {
+        await userModel.findByIdAndUpdate(userId, {
             $push: {
                 'tasks': {
                     title,
+                    createdAt: new Date()
                 }
             }
         });
@@ -113,7 +114,7 @@ module.exports.addTask = async (req, res) => {
 
 module.exports.getTasks = async (req, res) => {
     const {userId} = req.query;
-  
+
     if (userId) {
         const userTasks = await userModel.findById(userId);
         res.status(200).json({message: "SUCCESS", data: userTasks.tasks});

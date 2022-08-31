@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {addNewTask, getTasks, signInUser, signUpUser} from "./thunks";
+import {TaskInterface} from "./types";
 
 export interface UserState {
     user: string | null;
@@ -7,7 +8,7 @@ export interface UserState {
     signInLoader: boolean;
     addNewTaskLoader: boolean;
     passwordRecoveryLoader: boolean;
-    tasks: Array<{ title: string }>
+    tasks: Array<TaskInterface>
 }
 
 const initialState: UserState = {
@@ -72,7 +73,7 @@ export const user = createSlice({
 
             // get all user tasks logic
             .addCase(getTasks.fulfilled, (state, action) => {
-                console.log(action);
+                state.tasks = action.payload.data;
                 state.addNewTaskLoader = false;
             })
             .addCase(getTasks.pending, (state, action) => {
