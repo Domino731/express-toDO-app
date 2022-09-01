@@ -26,6 +26,7 @@ export const TasksBoard = () => {
     }, [userTasks])
 
     return <div>
+        <span className="block w-full border-t-2 border-gray-200"/>
         {userTasks.map(task => <Task data={task} key={task.title}/>)}
     </div>
 }
