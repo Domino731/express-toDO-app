@@ -56,7 +56,7 @@ export const Task: FunctionComponent<TaskProps> = ({data}) => {
                                                              checkboxChecked={isOperationChecked(operation.id)}
                 />)}
             </div>
-            <TaskActionBar/>
+            <TaskActionBar selectedOperations={selectedOperations}/>
         </div>
 
     </section>
