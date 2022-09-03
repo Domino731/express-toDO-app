@@ -1,6 +1,8 @@
 import {OperationInterface, TaskInterface} from "../../../Reducers/user/types";
-import {FunctionComponent} from "react";
+import {FunctionComponent, useCallback, useState} from "react";
 import {Operation} from "./Operation";
+import {Button} from "../../../Components/Button";
+import {TaskActionBar} from "./TaskActionBar";
 
 interface TaskProps {
     data: TaskInterface;
@@ -8,13 +10,29 @@ interface TaskProps {
 
 const operationsDummy: Array<OperationInterface> = [{
     title: 'Example 12123123123',
-    id: 's'
+    id: '123'
 }, {
     title: 'Example123123123',
-    id: 's'
+    id: '1'
 }]
 
 export const Task: FunctionComponent<TaskProps> = ({data}) => {
+    const [selectedOperations, setSelectedOperations] = useState<Array<string>>([]);
+
+    const isOperationChecked = useCallback((id: string) => {
+        return selectedOperations.includes(id);
+    }, [selectedOperations]);
+
+    const handleChangeSelectedOperations = (id: string) => {
+        let selectedOps: Array<string> = [...selectedOperations];
+        if (isOperationChecked(id)) {
+            selectedOps = selectedOps.filter(el => el !== id);
+        } else {
+            selectedOps.push(id)
+        }
+        setSelectedOperations(selectedOps)
+    }
+
     return <section className="mt-8">
         <div className="bg-slate-100 mt-2 rounded-md border-l-4 border-l-blue-500 pl-2 py-2 pr-4 drop-shadow-md">
             <div className="flex justify-between">
@@ -32,9 +50,13 @@ export const Task: FunctionComponent<TaskProps> = ({data}) => {
                 <p>10 minutes</p>
             </div>
 
-            <div className="w-full pl-8">
-                {operationsDummy.map(operation => <Operation data={operation}/>)}
+            <div className="w-full pl-8 mt-4">
+                {operationsDummy.map(operation => <Operation data={operation}
+                                                             checkboxOnChange={() => handleChangeSelectedOperations(operation.id)}
+                                                             checkboxChecked={isOperationChecked(operation.id)}
+                />)}
             </div>
+            <TaskActionBar/>
         </div>
 
     </section>
