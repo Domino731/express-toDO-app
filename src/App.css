@@ -28,6 +28,10 @@
     color: #61dafb;
 }
 
+.button-union {
+    display: flex;
+}
+
 .button-union button:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
