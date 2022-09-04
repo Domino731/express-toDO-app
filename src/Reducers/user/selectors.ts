@@ -9,4 +9,6 @@ export const userIdSelector = createSelector(userSelector, state => state.user);
 
 export const addNewTaskLoaderSelector = createSelector(userSelector, state => state.addNewTaskLoader);
 
-export const userTasksSelector = createSelector(userSelector, state => state.tasks)
+export const userTasksSelector = createSelector(userSelector, state => state.tasks);
+
+export const userSelectedTasksSelector = createSelector(userSelector, state => state.selectedTasks);

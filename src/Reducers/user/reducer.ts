@@ -1,14 +1,19 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {addNewTask, getTasks, signInUser, signUpUser} from "./thunks";
 import {TaskInterface} from "./types";
 
 export interface UserState {
+    // user id
     user: string | null;
+    // loaders flags
     signUpLoader: boolean;
     signInLoader: boolean;
     addNewTaskLoader: boolean;
     passwordRecoveryLoader: boolean;
-    tasks: Array<TaskInterface>
+    // data about tasks
+    tasks: Array<TaskInterface>;
+    // tasks id array
+    selectedTasks: Array<string>;
 }
 
 const initialState: UserState = {
@@ -17,7 +22,8 @@ const initialState: UserState = {
     signInLoader: false,
     passwordRecoveryLoader: false,
     addNewTaskLoader: false,
-    tasks: []
+    tasks: [],
+    selectedTasks: []
 }
 
 export const USER_REDUCER_NAME = 'user';
@@ -28,8 +34,8 @@ export const user = createSlice({
     initialState,
     // standard reducer logic, with auto-generated action types per reducer
     reducers: {
-        changeIsLogged: (state, action) => {
-            // state.isLogged = action.payload;
+        userChangeSelectedTasks: (state, action: PayloadAction<Array<string>>) => {
+            state.selectedTasks = action.payload;
         }
     },
     // Add reducers for additional action types
@@ -61,7 +67,6 @@ export const user = createSlice({
 
             // adding new task logic
             .addCase(addNewTask.fulfilled, (state, action) => {
-                console.log(action);
                 state.addNewTaskLoader = false;
             })
             .addCase(addNewTask.pending, (state, action) => {
@@ -86,4 +91,5 @@ export const user = createSlice({
     },
 });
 
+export const {userChangeSelectedTasks} = user.actions;
 export default user.reducer;
