@@ -122,3 +122,34 @@ module.exports.getTasks = async (req, res) => {
         res.status(404).json({message: "FAILED", status: 404});
     }
 }
+
+module.exports.deleteTasks = async (req, res) => {
+    const {userId, tasks} = req.query;
+
+    const idArray = tasks.replaceAll(",", " ").split(' ');
+
+    if (userId) {
+        // user data
+        const userTasks = await userModel.findById(userId);
+        // filter the task by passed id array
+        console.log('-----------------------------------------------------------------------------')
+        const filteredUserTasks = userTasks.tasks.filter(({id}) => !idArray.includes(id));
+        await userModel.findByIdAndUpdate(userId, {
+            tasks: filteredUserTasks
+        });
+        const userTasks2 = await userModel.findById(userId);
+        res.status(200).json({message: "SUCCESS", data: userTasks2.tasks});
+    } else {
+        res.status(404).json({message: "FAILED", status: 404});
+    }
+}
+
+module.exports.archiveTasks = async (req, res) => {
+    const {userId} = req.query;
+
+    if (userId) {
+        res.status(200).json({message: "SUCCESS", data: {}});
+    } else {
+        res.status(404).json({message: "FAILED", status: 404});
+    }
+}

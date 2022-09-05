@@ -2,6 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {apiRequest} from "../../api/methods";
 import {USER_CONSTANTS} from "./const";
 import {API_METHODS} from "../../api/const";
+import {userIdSelector, userSelectedTasksSelector} from "./selectors";
 
 export const signUpUser = createAsyncThunk(
     USER_CONSTANTS.SIGN_UP,
@@ -45,6 +46,21 @@ export const getTasks = createAsyncThunk(
     async (payload: { userId: string }) => {
         const {userId} = payload;
         const response = await apiRequest(API_METHODS.GET, '/tasks', {}, {params: {userId}});
+        return response.data;
+    }
+);
+
+export const deleteTasks = createAsyncThunk(
+    USER_CONSTANTS.DELETE_TASKS,
+    async (payload: { userId: string }, {getState}) => {
+        // @ts-ignore
+        const userId = userIdSelector(getState());
+        // @ts-ignore
+        const selectedTasks = userSelectedTasksSelector(getState())
+
+        let tasksQuery = selectedTasks.join(",");
+
+        const response = await apiRequest(API_METHODS.DELETE, `/tasks/?userId=${userId}&tasks=${tasksQuery}`);
         return response.data;
     }
 );
