@@ -8,7 +8,11 @@ const taskScheme = mongoose.Schema({
     createdAt: {
         type: Date,
         required: [true, "Missing createdAt key"],
-    }
+    },
+    status: {
+        type: String,
+        required: [true, "Missing title key"],
+    },
 });
 
 module.exports = taskScheme;

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {addNewTask, deleteTasks, getTasks, signInUser, signUpUser} from "./thunks";
+import {addNewTask, archiveTasks, deleteTasks, getTasks, signInUser, signUpUser} from "./thunks";
 import {TaskInterface} from "./types";
 
 export interface UserState {
@@ -102,6 +102,20 @@ export const user = createSlice({
                 state.taskActionLoader = true;
             })
             .addCase(deleteTasks.rejected, (state) => {
+                state.tasks = [];
+                state.taskActionLoader = false;
+            })
+
+            // archive tasks logic
+            .addCase(archiveTasks.fulfilled, (state, action) => {
+                state.tasks = action.payload.data;
+                state.selectedTasks = [];
+                state.taskActionLoader = false;
+            })
+            .addCase(archiveTasks.pending, (state) => {
+                state.taskActionLoader = true;
+            })
+            .addCase(archiveTasks.rejected, (state) => {
                 state.tasks = [];
                 state.taskActionLoader = false;
             })

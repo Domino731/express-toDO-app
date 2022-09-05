@@ -13,5 +13,6 @@ router.post('/checkCurrentUser', authController.checkCurrentUser);
 router.post('/add-task', authController.addTask);
 router.get('/tasks', authController.getTasks);
 router.delete('/tasks', authController.deleteTasks);
+router.put('/tasks-archive', authController.archiveTasks);
 // router.get('/tasks', authController.getTasks);
 module.exports = router;

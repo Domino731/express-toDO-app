@@ -101,7 +101,8 @@ module.exports.addTask = async (req, res) => {
             $push: {
                 'tasks': {
                     title,
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    status: "WAITING"
                 }
             }
         });
@@ -144,10 +145,30 @@ module.exports.deleteTasks = async (req, res) => {
 }
 
 module.exports.archiveTasks = async (req, res) => {
-    const {userId} = req.query;
+    const {userId, tasks} = req.query;
+
+    const idArray = tasks.replaceAll(",", " ").split(' ');
 
     if (userId) {
-        res.status(200).json({message: "SUCCESS", data: {}});
+        const userTasks = await userModel.findById(userId);
+        const updatedTasks = userTasks.tasks.map(el => {
+            const {title, id, createdAt} = el;
+            let status = el.status;
+
+            if (idArray.includes(id)) {
+                status = "ARCHIVED"
+            }
+
+            return ({
+                title, id, createdAt, status
+            })
+        });
+
+        await userModel.findByIdAndUpdate(userId, {
+            tasks: updatedTasks
+        });
+        const userTasks2 = await userModel.findById(userId);
+        res.status(200).json({message: "SUCCESS", data: userTasks2.tasks});
     } else {
         res.status(404).json({message: "FAILED", status: 404});
     }

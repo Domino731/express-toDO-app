@@ -12,3 +12,5 @@ export const addNewTaskLoaderSelector = createSelector(userSelector, state => st
 export const userTasksSelector = createSelector(userSelector, state => state.tasks);
 
 export const userSelectedTasksSelector = createSelector(userSelector, state => state.selectedTasks);
+
+export const userTaskActionLoaderSelector = createSelector(userSelector, state => state.taskActionLoader)

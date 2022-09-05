@@ -64,3 +64,18 @@ export const deleteTasks = createAsyncThunk(
         return response.data;
     }
 );
+
+export const archiveTasks = createAsyncThunk(
+    USER_CONSTANTS.ARCHIVE_TASKS,
+    async (payload: { userId: string }, {getState}) => {
+        // @ts-ignore
+        const userId = userIdSelector(getState());
+        // @ts-ignore
+        const selectedTasks = userSelectedTasksSelector(getState())
+
+        let tasksQuery = selectedTasks.join(",");
+
+        const response = await apiRequest(API_METHODS.PUT, `/tasks-archive/?userId=${userId}&tasks=${tasksQuery}`);
+        return response.data;
+    }
+);
