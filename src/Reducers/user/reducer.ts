@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {addNewTask, getTasks, signInUser, signUpUser} from "./thunks";
+import {addNewTask, deleteTasks, getTasks, signInUser, signUpUser} from "./thunks";
 import {TaskInterface} from "./types";
 
 export interface UserState {
@@ -10,6 +10,7 @@ export interface UserState {
     signInLoader: boolean;
     addNewTaskLoader: boolean;
     passwordRecoveryLoader: boolean;
+    taskActionLoader: boolean;
     // data about tasks
     tasks: Array<TaskInterface>;
     // tasks id array
@@ -22,6 +23,7 @@ const initialState: UserState = {
     signInLoader: false,
     passwordRecoveryLoader: false,
     addNewTaskLoader: false,
+    taskActionLoader: false,
     tasks: [],
     selectedTasks: []
 }
@@ -68,6 +70,7 @@ export const user = createSlice({
             // adding new task logic
             .addCase(addNewTask.fulfilled, (state, action) => {
                 state.addNewTaskLoader = false;
+                state.tasks = action.payload.data;
             })
             .addCase(addNewTask.pending, (state, action) => {
                 state.addNewTaskLoader = true;
@@ -87,6 +90,20 @@ export const user = createSlice({
             .addCase(getTasks.rejected, (state, action) => {
                 state.tasks = [];
                 state.addNewTaskLoader = false;
+            })
+
+            // delete tasks logic
+            .addCase(deleteTasks.fulfilled, (state, action) => {
+                state.tasks = action.payload.data;
+                state.selectedTasks = [];
+                state.taskActionLoader = false;
+            })
+            .addCase(deleteTasks.pending, (state) => {
+                state.taskActionLoader = true;
+            })
+            .addCase(deleteTasks.rejected, (state) => {
+                state.tasks = [];
+                state.taskActionLoader = false;
             })
     },
 });

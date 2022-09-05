@@ -132,7 +132,6 @@ module.exports.deleteTasks = async (req, res) => {
         // user data
         const userTasks = await userModel.findById(userId);
         // filter the task by passed id array
-        console.log('-----------------------------------------------------------------------------')
         const filteredUserTasks = userTasks.tasks.filter(({id}) => !idArray.includes(id));
         await userModel.findByIdAndUpdate(userId, {
             tasks: filteredUserTasks
