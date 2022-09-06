@@ -6,6 +6,8 @@ import Checkbox from "../../../Components/ Checkbox";
 import {useDispatch, useSelector} from "react-redux";
 import {userSelectedTasksSelector} from "../../../Reducers/user/selectors";
 import {userChangeSelectedTasks} from "../../../Reducers/user/reducer";
+import Status from "../../../Components/Status";
+import {STATUS_SIZES} from "../../../Components/Status/Status";
 
 interface TaskProps {
     data: TaskInterface;
@@ -63,10 +65,7 @@ export const Task: FunctionComponent<TaskProps> = ({data}) => {
         <div className="bg-slate-100 mt-2 rounded-md border-l-4 border-l-blue-500 pl-2 py-2 pr-4 drop-shadow-md">
             <div className="flex justify-between">
                 <p className="text-medium text-gray-400">Tech</p>
-                <p className="text-medium text-gray-400 flex items-center">
-                    <span className="block left--6 top-[50%] w-2 h-2 bg-blue-500 rounded-2xl mr-1"/>
-                    In progress
-                </p>
+                <Status status={data.status} size={STATUS_SIZES.MD}/>
             </div>
             <h2 className='font-medium text-lg mt-1'>
                 {data.title}

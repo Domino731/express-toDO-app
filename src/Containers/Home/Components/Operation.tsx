@@ -20,7 +20,7 @@ export const Operation: FunctionComponent<OperationProps> = ({data, checkboxOnCh
                 {data.title}
             </div>
 
-            <Status size={STATUS_SIZES.SM}/>
+            <Status size={STATUS_SIZES.SM} status={"CREATED"}/>
         </div>
 
     </div>
