@@ -1,6 +1,8 @@
-import {FunctionComponent, useMemo} from "react";
+import {FunctionComponent, useCallback, useMemo, useState} from "react";
 import classNames from "classnames";
 import {TASK_STATUSES, TaskStatusesUnion} from "../../Reducers/user/types";
+import {AvailableStatuses} from "./const";
+import {getStatusColor} from "./utilts";
 
 export enum STATUS_SIZES {
     MD = "MD",
@@ -13,6 +15,10 @@ interface StatusProps {
 }
 
 export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, status}) => {
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+    const handleChangeIsExpanded = useCallback(() => setIsExpanded(prev => !prev), [])
+
     // class name for paragraph
     const pClassName = useMemo(() => classNames(
         'text-medium',
@@ -54,8 +60,18 @@ export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, 
         }
     }, [status])
 
-    return <p className={pClassName}>
-        <span className={spanClassName}/>
-        {label}
-    </p>
+    return <div className="relative">
+        <button onClick={handleChangeIsExpanded}>
+            <p className={pClassName}>
+                <span className={spanClassName}/>
+                {label}
+            </p>
+        </button>
+        <div
+            className="flex flex-col absolute right-[30px] w-[167px] top-0 bg-slate-100 mt-2 rounded-md drop-shadow-lg py-2">
+            {AvailableStatuses.map(({label, status}) => <button
+                // className={`font-bold ${getStatusColor(status, 'text')}`}>{label}</button>)}
+                className={`font-bold text-orange-500`}>{label}</button>)}
+        </div>
+    </div>
 }

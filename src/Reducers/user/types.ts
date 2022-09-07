@@ -14,7 +14,9 @@ export interface OperationInterface {
 export enum TASK_STATUSES {
     ARCHIVED = 'ARCHIVED',
     CREATED = 'CREATED',
-    WAITING = 'WAITING'
+    WAITING = 'WAITING',
+    FINISHED = 'FINISHED',
+    IN_PROGRESS = 'IN_PROGRESS'
 }
 
 export type TaskStatusesUnion = keyof typeof TASK_STATUSES;
