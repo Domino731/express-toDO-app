@@ -14,6 +14,12 @@ export const AvailableStatuses: Array<AvailableTypeInterface> = [
         label: 'In progress',
         status: TASK_STATUSES.IN_PROGRESS
     },
-
-
+    {
+        label: 'Finished',
+        status: TASK_STATUSES.FINISHED
+    },
+    {
+        label: 'Blocked',
+        status: TASK_STATUSES.BLOCKED
+    }
 ]

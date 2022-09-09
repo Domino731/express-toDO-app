@@ -1,8 +1,9 @@
-import {FunctionComponent, useCallback, useMemo, useState} from "react";
+import {FunctionComponent, useCallback, useMemo, useRef, useState} from "react";
 import classNames from "classnames";
 import {TASK_STATUSES, TaskStatusesUnion} from "../../Reducers/user/types";
 import {AvailableStatuses} from "./const";
 import {getStatusColor} from "./utilts";
+import {useOnClickOutside} from "../../Hooks/useOutsideClick";
 
 export enum STATUS_SIZES {
     MD = "MD",
@@ -15,10 +16,15 @@ interface StatusProps {
 }
 
 export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, status}) => {
+    const ref = useRef(null);
+
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
     const handleChangeIsExpanded = useCallback(() => setIsExpanded(prev => !prev), [])
 
+    // hook actions
+    useOnClickOutside(ref, () => setIsExpanded(false))
+    
     // class name for paragraph
     const pClassName = useMemo(() => classNames(
         'text-medium',
@@ -51,8 +57,6 @@ export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, 
 
     const label = useMemo(() => {
         switch (status) {
-            case TASK_STATUSES.CREATED:
-                return 'Created'
             case TASK_STATUSES.ARCHIVED:
                 return 'Archived';
             default:
@@ -67,11 +71,10 @@ export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, 
                 {label}
             </p>
         </button>
-        <div
-            className="flex flex-col absolute right-[30px] w-[167px] top-0 bg-slate-100 mt-2 rounded-md drop-shadow-lg py-2">
+        {isExpanded && <div ref={ref}
+                            className="flex flex-col absolute right-[30px] w-[167px] top-0 left-[100%] bg-slate-100 mt-2 rounded-md drop-shadow-lg py-2">
             {AvailableStatuses.map(({label, status}) => <button
-                // className={`font-bold ${getStatusColor(status, 'text')}`}>{label}</button>)}
-                className={`font-bold text-orange-500`}>{label}</button>)}
-        </div>
+                className={'font-bold text-[14px] border-b-solid border-b-2 border-purple-500'}>{label}</button>)}
+        </div>}
     </div>
 }
