@@ -24,7 +24,7 @@ export const Status: FunctionComponent<StatusProps> = ({size = STATUS_SIZES.MD, 
 
     // hook actions
     useOnClickOutside(ref, () => setIsExpanded(false))
-    
+
     // class name for paragraph
     const pClassName = useMemo(() => classNames(
         'text-medium',

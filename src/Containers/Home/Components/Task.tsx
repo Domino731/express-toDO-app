@@ -8,6 +8,7 @@ import {userSelectedTasksSelector} from "../../../Reducers/user/selectors";
 import {userChangeSelectedTasks} from "../../../Reducers/user/reducer";
 import Status from "../../../Components/Status";
 import {STATUS_SIZES} from "../../../Components/Status/Status";
+import {Input} from "../../../Components/Input";
 
 interface TaskProps {
     data: TaskInterface;
@@ -27,6 +28,7 @@ export const Task: FunctionComponent<TaskProps> = ({data}) => {
     const userSelectedTasks = useSelector(userSelectedTasksSelector);
 
     const [selectedOperations, setSelectedOperations] = useState<Array<string>>([]);
+    const [titleInputFlag, setTitleInputFlag] = useState<boolean>(false);
 
     const isOperationChecked = useCallback((id: string) => {
         return selectedOperations.includes(id);
@@ -67,9 +69,13 @@ export const Task: FunctionComponent<TaskProps> = ({data}) => {
                 <p className="text-medium text-gray-400">Tech</p>
                 <Status status={data.status} size={STATUS_SIZES.MD}/>
             </div>
-            <h2 className='font-medium text-lg mt-1'>
-                {data.title}
-            </h2>
+            <div>
+                {titleInputFlag ? <Input value={data.title}/> :
+                    <h2 className='font-medium text-lg mt-1' onDoubleClick={e => setTitleInputFlag(true)}>
+                        {data.title}
+                    </h2>}
+            </div>
+
             <div className="flex justify-between text-base text-gray-400">
                 <p>0 operations left</p>
                 <p>10 minutes</p>
