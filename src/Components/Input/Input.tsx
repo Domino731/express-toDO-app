@@ -21,8 +21,8 @@ export const Input: React.FC<InputProps> = ({label, placeholder, onChange, value
             type={type}
             name={name}
             className={`
-            block
-             w-full
+              block
+              w-full
               border-slate-300
               hover:border-slate-400
               focus:border-violet-800
