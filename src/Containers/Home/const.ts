@@ -1,18 +1,30 @@
-export const taskTypes = [
+import {TASK_TYPES, TaskTypesUnion} from "../../Reducers/tasks/types";
+
+interface TaskType {
+    label: string;
+    color: string;
+    key: TaskTypesUnion
+}
+
+export const taskTypes: Array<TaskType> = [
     {
-        label: 'TECH',
-        color: 'bg-blue-600'
+        label: 'Tech',
+        color: 'bg-blue-600',
+        key: TASK_TYPES.TECH
     },
     {
         label: 'Sport',
-        color: 'bg-fushia-600'
+        color: 'bg-fuchsia-600',
+        key: TASK_TYPES.SPORT
     },
     {
         label: 'Home',
-        color: 'bg-rose-600'
+        color: 'bg-rose-600',
+        key: TASK_TYPES.HOME
     },
     {
         label: 'Study',
-        color: 'bg-green-600'
+        color: 'bg-green-600',
+        key: TASK_TYPES.STUDY
     }
 ]
