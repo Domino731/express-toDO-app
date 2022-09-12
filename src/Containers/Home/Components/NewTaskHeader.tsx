@@ -8,6 +8,7 @@ import {addNewTask} from "../../../Reducers/user/thunks";
 import {taskTypes} from "../const";
 import {TASK_TYPES, TaskTypesUnion} from "../../../Reducers/tasks/types";
 import classNames from "classnames";
+import {Datepicker} from "../../../Components/Input/Datepicker";
 
 export const NewTaskHeader: React.FC = () => {
     const dispatch = useDispatch();
@@ -65,12 +66,26 @@ export const NewTaskHeader: React.FC = () => {
     return <>
         <Input label="Add new task" onChange={handleChangeInputValue} value={inputValue}
                placeholder="Go with a dog"/>
+
+        {/*chose the task type */}
         <div className="block mt-2">
             <p>Type</p>
             {taskTypes.map(({label, color, key}) => <button
                 onClick={() => handleChangeTaskType(key)}
                 className={taskTypeButtonClassName(color, key)}>{label}</button>)}
         </div>
+
+        {/*estimate task*/}
+        <div className="block mt-4">
+            <p>Estimate</p>
+            <div className="w-[200px]">
+                <Input/>
+            </div>
+            <div>
+                {/*<Datepicker/>*/}
+            </div>
+        </div>
+
         <span className="block mt-4"/>
         {inputValue.length >= TASK_CONFIG.MIN_LENGTH &&
             <Button disabled={addNewTaskLoader} onClick={handleAddNewTask}>Add</Button>}
